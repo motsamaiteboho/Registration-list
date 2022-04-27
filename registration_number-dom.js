@@ -37,7 +37,7 @@ function addElement() {
         regNumbers.addRegistration(regNumber.value);
         localStorage.setItem('regNumbers', JSON.stringify(regNumbers.AllRegNumbers()));
         createDivElment(regNumber.value);
-        //regNumber.value = "";
+        regNumber.value = "";
     }
 }
 addBtn.addEventListener('click', addElement);

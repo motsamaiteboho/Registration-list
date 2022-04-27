@@ -4,7 +4,8 @@ function RegstrationNumbers(){
     var regByTown = [];
 
     function addRegistration(regNumber){
-        regNumbers.push(regNumber);
+        if(!regNumbers.includes(regNumber))
+            regNumbers.push(regNumber);
     }
     function AllRegNumbers(){
         return regNumbers;
