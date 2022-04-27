@@ -34,9 +34,13 @@ function createDivElment(regNumber) {
 
 function addElement() {
     if (regNumber.value !== "") {
-        regNumbers.addRegistration(regNumber.value);
-        localStorage.setItem('regNumbers', JSON.stringify(regNumbers.AllRegNumbers()));
-        createDivElment(regNumber.value);
+        if(!regNumber.value.match(/^[^a-zA-Z0-9]+$/)){
+            var reg = regNumber.value.toUpperCase();
+            regNumbers.addRegistration(reg);
+            localStorage.setItem('regNumbers', JSON.stringify(regNumbers.AllRegNumbers()));
+            if(!regNumbers.AllRegNumbers().includes(reg))
+                createDivElment(reg);
+        }
         regNumber.value = "";
     }
 }
