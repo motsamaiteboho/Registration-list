@@ -36,10 +36,11 @@ function addElement() {
     if (regNumber.value !== "") {
         if(!regNumber.value.match(/^[^a-zA-Z0-9]+$/)){
             var reg = regNumber.value.toUpperCase();
-            regNumbers.addRegistration(reg);
-            localStorage.setItem('regNumbers', JSON.stringify(regNumbers.AllRegNumbers()));
             if(!regNumbers.AllRegNumbers().includes(reg))
                 createDivElment(reg);
+            regNumbers.addRegistration(reg);
+            localStorage.setItem('regNumbers', JSON.stringify(regNumbers.AllRegNumbers()));
+        
         }
         regNumber.value = "";
     }
