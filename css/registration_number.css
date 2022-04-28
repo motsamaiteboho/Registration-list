@@ -46,6 +46,7 @@ select {
 }
 .plates {
     margin-left: 20%;
+    margin-right: 20%;
 }
 .plates div{
     float: left;
