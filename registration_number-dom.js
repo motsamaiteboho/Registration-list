@@ -69,6 +69,6 @@ function resetReg() {
     for (let i = 0; i < elementList.length; i++) {
         elementList[i].remove();
     }
-    regNumbers.resetReg;
+    regNumbers.resetReg();
 }
 resetBtn.addEventListener('click', resetReg);
