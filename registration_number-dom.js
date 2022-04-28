@@ -5,6 +5,8 @@ const regNumber = document.querySelector(".fReg");
 //get a reference to the add button
 const addBtn = document.querySelector(".AddBtn");
 const resetBtn = document.querySelector(".ResetBtn");
+const errorMessageElem = document.querySelector(".errorMessage");
+
 
 //variables
 var regNumbers = RegstrationNumbers();
@@ -28,21 +30,46 @@ function createDivElment(regNumber) {
     // add the text node to the newly created div
     newDiv.appendChild(newContent);
     // add the newly created element and its content into the DOM
-    const currentDiv = document.querySelector(".plates");
-    document.body.insertBefore(newDiv, currentDiv);
+    const currentDiv = document.querySelector(".plate1");
+
+    currentDiv.before(newDiv);
 }
 
 function addElement() {
     if (regNumber.value !== "") {
-        if(!regNumber.value.match(/^[^a-zA-Z0-9]+$/)){
+        var format1 = "^[A-Z]{2} [0-9]{6}$";
+        var format2 = "^[A-Z]{2} [0-9]{3}-[0-9]{3}$";
+        var format3 = "^[A-Z]{2} [0-9]{3} [0-9]{3}$";
+        if(regNumber.value.match(format1) || regNumber.value.match(format2) || regNumber.value.match(format3)){
             var reg = regNumber.value.toUpperCase();
+
             if(!regNumbers.AllRegNumbers().includes(reg))
                 createDivElment(reg);
+            else{
+                setTimeout(function(){
+                    errorMessageElem.innerHTML  = "...";
+                  },3000);
+                
+                  errorMessageElem.innerHTML = "Please, registration already exits";  
+            }
+            
             regNumbers.addRegistration(reg);
             localStorage.setItem('regNumbers', JSON.stringify(regNumbers.AllRegNumbers()));
         
         }
+        else {
+            setTimeout(function(){
+                errorMessageElem.innerHTML  = "...";
+              },3000);
+              errorMessageElem.innerHTML = "Please, enter a valid registration format ";
+        }
         regNumber.value = "";
+    }
+    else{
+        setTimeout(function(){
+            errorMessageElem.innerHTML  = "...";
+          },3000);
+          errorMessageElem.innerHTML = "Please, enter a valid registration number";
     }
 }
 addBtn.addEventListener('click', addElement);
