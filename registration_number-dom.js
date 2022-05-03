@@ -37,39 +37,39 @@ function createDivElment(regNumber) {
 
 function addElement() {
     if (regNumber.value !== "") {
-        var format1 = "^[A-Z]{2} [0-9]{6}$";
-        var format2 = "^[A-Z]{2} [0-9]{3}-[0-9]{3}$";
-        var format3 = "^[A-Z]{2} [0-9]{3} [0-9]{3}$";
-        if(regNumber.value.match(format1) || regNumber.value.match(format2) || regNumber.value.match(format3)){
+        var format1 = "^[A-Z,a-z]{2} [0-9]{6}$";
+        var format2 = "^[A-Z,a-z]{2} [0-9]{3}-[0-9]{3}$";
+        var format3 = "^[A-Z,a-z]{2} [0-9]{3} [0-9]{3}$";
+        if (regNumber.value.match(format1) || regNumber.value.match(format2) || regNumber.value.match(format3)) {
             var reg = regNumber.value.toUpperCase();
 
-            if(!regNumbers.AllRegNumbers().includes(reg))
+            if (!regNumbers.AllRegNumbers().includes(reg))
                 createDivElment(reg);
-            else{
-                setTimeout(function(){
-                    errorMessageElem.innerHTML  = "...";
-                  },3000);
-                
-                  errorMessageElem.innerHTML = "Please, registration already exits";  
+            else {
+                setTimeout(function () {
+                    errorMessageElem.innerHTML = "...";
+                }, 3000);
+
+                errorMessageElem.innerHTML = "Please, registration already exits";
             }
-            
+
             regNumbers.addRegistration(reg);
             localStorage.setItem('regNumbers', JSON.stringify(regNumbers.AllRegNumbers()));
-        
+
         }
         else {
-            setTimeout(function(){
-                errorMessageElem.innerHTML  = "...";
-              },3000);
-              errorMessageElem.innerHTML = "Please, enter a valid registration format ";
+            setTimeout(function () {
+                errorMessageElem.innerHTML = "...";
+            }, 3000);
+            errorMessageElem.innerHTML = "Please, enter a valid registration format ";
         }
         regNumber.value = "";
     }
-    else{
-        setTimeout(function(){
-            errorMessageElem.innerHTML  = "...";
-          },3000);
-          errorMessageElem.innerHTML = "Please, enter a valid registration number";
+    else {
+        setTimeout(function () {
+            errorMessageElem.innerHTML = "...";
+        }, 3000);
+        errorMessageElem.innerHTML = "Please, enter a valid registration number";
     }
 }
 addBtn.addEventListener('click', addElement);
@@ -82,10 +82,18 @@ function selectedTown() {
     for (let i = 0; i < elementList.length; i++) {
         elementList[i].remove();
     }
+    const currentDiv = document.querySelector(".plate11");
     var regbyTown = regNumbers.filterByTown(selectedBtn.value);
-    for (let i = 0; i < regbyTown.length; i++) {
-        createDivElment(regbyTown[i]);
+    if (regbyTown.length > 0) {
+        for (let i = 0; i < regbyTown.length; i++) {
+            createDivElment(regbyTown[i]);
+        }
+        currentDiv.innerHTML = "";
     }
+    else{
+        currentDiv.innerHTML = "No registration numbers available";
+    }
+
 }
 selectedBtn.addEventListener('click', selectedTown);
 
